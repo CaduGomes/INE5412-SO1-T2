@@ -11,12 +11,15 @@ class BitmapManager : public MemoryManager
 {
 
 public:
-    BitmapManager(int free_memory_size, int page_size, AllocationAlgorithm *allocation_algorithm) : MemoryManager(free_memory_size, page_size, allocation_algorithm){};
+    BitmapManager(int free_memory_size, int page_size, AllocationAlgorithm *allocation_algorithm) : MemoryManager(free_memory_size, page_size, allocation_algorithm)
+    {
+        bitmap = vector<int>(free_memory_size / page_size, 0);
+    };
+
+    void request_memory(MemoryRequest *request) override;
 
 private:
-    int free_memory_size;
-    int page_size;
-    int allocation_algorithm;
+    vector<int> bitmap;
 };
 
 #endif
