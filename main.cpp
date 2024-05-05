@@ -1,6 +1,7 @@
-#include "MemoryRequest.hpp"
 #include "BitmapManager.hpp"
 #include "ListManager.hpp"
+#include "FirstFitAlgorithm.hpp"
+#include "NextFitAlgorithm.hpp"
 
 #include <sstream>
 
@@ -29,7 +30,7 @@ int main()
 
 	std::getline(std::cin, linha);
 
-	int alocation_algorithm = std::stoi(linha);
+	int allocation_algorithm = std::stoi(linha);
 
 	vector<MemoryRequest *> requests;
 
@@ -39,21 +40,33 @@ int main()
 		requests.push_back(request);
 	}
 
+	AllocationAlgorithm *algorithm = nullptr;
+
+	switch (allocation_algorithm)
+	{
+	case 1:
+		algorithm = new FirstFitAlgorithm();
+		break;
+	case 2:
+		algorithm = new NextFitAlgorithm();
+		break;
+	}
+
 	MemoryManager *manager = nullptr;
 
 	switch (manager_type)
 	{
 	case Bitmap:
-		manager = new BitmapManager(free_memory_size, page_size, alocation_algorithm);
+		manager = new BitmapManager(free_memory_size, page_size, algorithm);
 		break;
 	case List:
-		manager = new ListManager(free_memory_size, page_size, alocation_algorithm);
+		manager = new ListManager(free_memory_size, page_size, algorithm);
 		break;
 	}
 
 	for (MemoryRequest *request : requests)
 	{
-		manager->requestMemory(request);
+		manager->request_memory(request);
 	}
 
 	// std::cout << "Memory Manager: " << manager->getName() << std::endl;
@@ -62,7 +75,7 @@ int main()
 
 	// std::cout << "Page size: " << page_size << std::endl;
 
-	// std::cout << "Alocation algorithm: " << manager->getAlocationAlgorithm() << std::endl;
+	// std::cout << "allocation algorithm: " << manager->getallocationAlgorithm() << std::endl;
 
 	// std::cout << "Memory usage: " << manager->getMemoryUsage() << std::endl;
 

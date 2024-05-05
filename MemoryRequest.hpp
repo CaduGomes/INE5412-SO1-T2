@@ -15,7 +15,7 @@ public:
 public:
     char request_type; // A ou D
     int request_id;
-    int request_size = -1; // Utilizado para alocação
+    int request_size = -1; // Utilizado para alocação em bytes
 };
 
 #endif

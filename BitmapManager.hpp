@@ -11,12 +11,12 @@ class BitmapManager : public MemoryManager
 {
 
 public:
-    BitmapManager(int free_memory_size, int page_size, int alocation_algorithm) : MemoryManager(free_memory_size, page_size, alocation_algorithm){};
+    BitmapManager(int free_memory_size, int page_size, AllocationAlgorithm *allocation_algorithm) : MemoryManager(free_memory_size, page_size, allocation_algorithm){};
 
 private:
     int free_memory_size;
     int page_size;
-    int alocation_algorithm;
+    int allocation_algorithm;
 };
 
 #endif
