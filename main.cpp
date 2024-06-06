@@ -1,14 +1,12 @@
 #include "BitmapManager.hpp"
 #include "ListManager.hpp"
-#include "FirstFitAlgorithm.hpp"
-#include "NextFitAlgorithm.hpp"
 
 #include <sstream>
 
 enum ManagerType
 {
 	Bitmap = 1,
-	List,
+	List = 2,
 };
 
 int main()
@@ -32,6 +30,12 @@ int main()
 
 	int allocation_algorithm = std::stoi(linha);
 
+	if (allocation_algorithm < 1 || allocation_algorithm > 2)
+	{
+		std::cerr << "Invalid allocation algorithm" << std::endl;
+		return 1;
+	}
+
 	vector<MemoryRequest *> requests;
 
 	while (std::getline(std::cin, linha))
@@ -40,27 +44,15 @@ int main()
 		requests.push_back(request);
 	}
 
-	AllocationAlgorithm *algorithm = nullptr;
-
-	switch (allocation_algorithm)
-	{
-	case 1:
-		algorithm = new FirstFitAlgorithm();
-		break;
-	case 2:
-		algorithm = new NextFitAlgorithm();
-		break;
-	}
-
 	MemoryManager *manager = nullptr;
 
 	switch (manager_type)
 	{
 	case Bitmap:
-		manager = new BitmapManager(free_memory_size, page_size, algorithm);
+		manager = new BitmapManager(free_memory_size, page_size, allocation_algorithm);
 		break;
 	case List:
-		manager = new ListManager(free_memory_size, page_size, algorithm);
+		manager = new ListManager(free_memory_size, page_size, allocation_algorithm);
 		break;
 	}
 
@@ -69,17 +61,6 @@ int main()
 		manager->request_memory(request);
 	}
 
-	// std::cout << "Memory Manager: " << manager->getName() << std::endl;
-
-	// std::cout << "Memory size: " << free_memory_size << std::endl;
-
-	// std::cout << "Page size: " << page_size << std::endl;
-
-	// std::cout << "allocation algorithm: " << manager->getallocationAlgorithm() << std::endl;
-
-	// std::cout << "Memory usage: " << manager->getMemoryUsage() << std::endl;
-
-	// std::cout << "Memory waste: " << manager->getMemoryWaste() << std::endl;
-
+	manager->print_memory();
 	return 0;
 }
