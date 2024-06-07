@@ -24,8 +24,10 @@ protected:
     int min_block_size;       // Tamanho mínimo de bloco em bytes
     int allocation_algorithm; // Algoritmo de alocação
 
-    int allocations;   // Número de alocações
-    int deallocations; // Número de desalocações
+    int allocations = 0;             // Número de alocações
+    int deallocations = 0;           // Número de desalocações
+    int total_allocated_bytes = 0;   // Total de bytes alocados
+    int total_deallocated_bytes = 0; // Total de bytes desalocados
 };
 
 #endif

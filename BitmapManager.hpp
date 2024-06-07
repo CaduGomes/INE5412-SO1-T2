@@ -11,10 +11,10 @@ class BitmapManager : public MemoryManager
 {
 
 public:
-    BitmapManager(int free_memory_size, int page_size, int allocation_algorithm) : MemoryManager(free_memory_size, page_size, allocation_algorithm)
+    BitmapManager(int free_memory_size, int min_block_size, int allocation_algorithm) : MemoryManager(free_memory_size, min_block_size, allocation_algorithm)
     {
-        bitmap = vector<int>(free_memory_size / page_size, 0);
-        operation_id = vector<int>(free_memory_size / page_size, -1);
+        bitmap = vector<int>(free_memory_size / min_block_size, 0);
+        request_id_map = vector<int>(free_memory_size / min_block_size, -1);
     };
 
     void request_memory(MemoryRequest *request) override;
@@ -31,7 +31,7 @@ public:
 
 private:
     vector<int> bitmap;
-    vector<int> operation_id;
+    vector<int> request_id_map;
 
     int last_fit_index = 0;
 };

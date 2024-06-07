@@ -14,9 +14,11 @@ public:
     bool is_allocation() { return request_type == 'A'; }
 
 public:
-    char request_type; // A ou D
     int request_id;
     int request_size = -1; // Utilizado para alocação em bytes
+
+private:
+    char request_type; // A ou D
 };
 
 #endif
