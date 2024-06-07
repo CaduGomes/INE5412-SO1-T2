@@ -21,9 +21,9 @@ public:
 
     void allocate_memory(MemoryRequest *request) override;
 
-    void first_fit_algorithm(int request_size, int request_id);
+    void first_fit_algorithm(int blocks_needed, int request_id);
 
-    void next_fit_algorithm(int request_size, int request_id);
+    void next_fit_algorithm(int blocks_needed, int request_id);
 
     void deallocate_memory(MemoryRequest *request) override;
 
